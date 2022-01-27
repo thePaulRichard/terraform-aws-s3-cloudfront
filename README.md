@@ -1,6 +1,6 @@
 # AWS S3 CloudFront Terraform module
 
-Terraform module which creates an S3 private bucket with encryption (SSE-S3) behind a CloudFront, also creates an IAM user with an encrypted Access Key (PGP) to use in CI/CD ([.gitlab-ci.yml](.gitlab-cy.yml)).
+Terraform module which creates an S3 private bucket with encryption (SSE-S3) behind a CloudFront, also creates an IAM user with an encrypted Access Key (PGP) to use in CI/CD ([.gitlab-ci.yml](.gitlab-ci.yml)).
 
 *The use of **default_tags** inside providers it's **not** optional. But only **Name** is required to name the bucket.
 
