@@ -1,10 +1,9 @@
 upload to s3:
   image:
     name: amazon/aws-cli
-    entrypoint: [""]
   script:
-    - aws configure set region us-east-1
-    - aws s3 sync . s3://"$S3_BUCKET" --exclude "README.md" --exclude ".git/*" --exclude "terraform/*" --exclude ".gitlab-ci.yml" --exclude ".gitignore" --delete --sse
+    - aws configure set region "$AWS_DEFAULT_REGION"
+    - aws s3 sync ./s3bucket/* s3://"$S3_BUCKET" --recursive  --delete --sse
     - aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT" --paths "/*"
   only:
     refs:
