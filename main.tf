@@ -182,11 +182,12 @@ resource "aws_cloudfront_distribution" "s3" {
     }
   }
 
-  aliases         = var.aliases
-  enabled         = true
-  is_ipv6_enabled = true
-  comment         = var.description
-  price_class     = var.price_class
+  aliases             = var.aliases
+  enabled             = true
+  is_ipv6_enabled     = true
+  comment             = var.description
+  price_class         = var.price_class
+  default_root_object = var.default_root_object
 
   dynamic "logging_config" {
     for_each = length(keys(var.logging_config)) == 0 ? [] : [var.logging_config]
