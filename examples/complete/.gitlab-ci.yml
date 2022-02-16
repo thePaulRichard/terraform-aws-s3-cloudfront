@@ -3,14 +3,8 @@ upload to s3:
     name: amazon/aws-cli
   script:
     - aws configure set region "$AWS_DEFAULT_REGION"
-    - aws s3 sync ./s3bucket/* s3://"$S3_BUCKET" --recursive  --delete --sse
+    - aws s3 sync ./s3bucket/* s3://"$S3_BUCKET" --delete --sse
     - aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT" --paths "/*"
   only:
     refs:
       - main
-  except:
-    changes:
-      - "*.md"
-      - ".gitlab-ci.yml"
-      - ".gitignore"
-      - "terraform/*"

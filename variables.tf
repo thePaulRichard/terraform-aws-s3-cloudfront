@@ -66,3 +66,9 @@ variable "s3_destroy" {
   type        = bool
   default     = false
 }
+
+variable "s3_versioning" {
+  description = "Whether to enable the S3 bucket versioning."
+  type        = string
+  default     = "Suspended"
+}

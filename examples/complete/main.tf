@@ -25,7 +25,7 @@ provider "aws" {
 }
 
 locals {
-  domain_name = "example.com"
+  domain_name = "rdeai-lab.net"
   zone_id     = data.aws_route53_zone.mgmt.zone_id
   subdomain   = "mycdn"
 }
@@ -83,13 +83,15 @@ module "s3_cloudfront" {
     acm_certificate_arn = module.acm.acm_certificate_arn
     ssl_support_method  = "sni-only"
   }
+}
 
-  cors_rule = [
-    {
-      allowed_headers = ["*"]
-      allowed_methods = ["GET"]
-      allowed_origins = ["${local.subdomain}.${local.domain_name}"]
-      max_age_seconds = 3000
-    }
-  ]
+resource "aws_s3_bucket_cors_configuration" "example" {
+  bucket = module.s3_cloudfront.s3_bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["https://${local.subdomain}.${local.domain_name}"]
+    max_age_seconds = 3000
+  }
 }

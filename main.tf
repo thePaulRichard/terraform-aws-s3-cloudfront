@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.0"
+      version = ">= 4.0"
     }
   }
 }
@@ -83,26 +83,28 @@ resource "aws_iam_user_policy" "ci_cd" {
 # S3 Bucket
 resource "aws_s3_bucket" "private" {
   bucket        = "${local.name}-${random_id.this.hex}"
-  acl           = "private"
   force_destroy = var.s3_destroy
+}
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
+resource "aws_s3_bucket_acl" "this" {
+  bucket = aws_s3_bucket.private.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "this" {
+  bucket = aws_s3_bucket.private.id
+
+  versioning_configuration {
+    status = var.s3_versioning
   }
+}
 
-  dynamic "cors_rule" {
-    for_each = try(jsondecode(var.cors_rule), var.cors_rule)
+resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
+  bucket = aws_s3_bucket.private.bucket
 
-    content {
-      allowed_methods = cors_rule.value.allowed_methods
-      allowed_origins = cors_rule.value.allowed_origins
-      allowed_headers = lookup(cors_rule.value, "allowed_headers", null)
-      expose_headers  = lookup(cors_rule.value, "expose_headers", null)
-      max_age_seconds = lookup(cors_rule.value, "max_age_seconds", null)
+  rule {
+    apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
     }
   }
 }

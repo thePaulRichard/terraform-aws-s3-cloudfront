@@ -1,12 +1,26 @@
 # AWS S3 CloudFront Terraform module
 
-Terraform module which creates an S3 private bucket with encryption (SSE-S3) behind a CloudFront, also creates an IAM user with an encrypted Access Key (PGP) to use in CI/CD ([.gitlab-ci.yml](.gitlab-ci.yml)).
+Terraform module, which creates an S3 private bucket with encryption (SSE-S3) behind a CloudFront, also makes an IAM user with an encrypted Access Key (PGP) for use with your CI/CD ([.gitlab-ci.yml](examples/complete/.gitlab-ci.yml)).
 
 *The use of **default_tags** inside providers it's **not** optional. But only **Name** is required to name the bucket.
 
 ## GPG
 
-Execute the script [gpg.sh](gpg.sh) to create your gpg key for use with the IAM user.
+Execute the script [gpg.sh](gpg.sh) to create your gpg key for use with the IAM user (will make the key file in the folder).
+
+After the **terraform apply** command, use the following command to display the IAM secret key:
+
+```
+terraform output iam_secret | base64 --decode --ignore-garbage | gpg --decrypt 
+```
+
+To re-create the IAM credentials, use:
+
+```
+terraform taint module.s3_cloudfront.aws_iam_access_key.ci_cd[0]
+
+terraform apply
+```
 
 ## Usage 
 
@@ -28,6 +42,7 @@ provider "aws" {
 module "s3_cloudfront" {
   source = "git@github.com:thePaulRichard/terraform-s3-cloudfront.git"
 
+  create_iam  = false
   description = "My S3-CloudFront"
 }
 ```

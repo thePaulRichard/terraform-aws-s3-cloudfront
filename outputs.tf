@@ -3,6 +3,11 @@ output "s3_bucket_id" {
   description = "S3 Bucket ID"
 }
 
+output "s3_bucket" {
+  value       = aws_s3_bucket.private.bucket
+  description = "S3 Bucket"
+}
+
 output "iam_access_key" {
   description = "The IAM access key secret"
   value       = aws_iam_access_key.ci_cd[0].id
