@@ -40,7 +40,7 @@ provider "aws" {
 }
 
 module "s3_cloudfront" {
-  source = "git@github.com:thePaulRichard/aws-terraform-s3-cloudfront.git"
+  source = "git@github.com:thePaulRichard/terraform-aws-s3-cloudfront.git"
 
   create_iam  = false
 }
@@ -83,7 +83,7 @@ module "acm" {
 }
 
 module "s3_cloudfront" {
-  source = "git@github.com:thePaulRichard/aws-terraform-s3-cloudfront.git"
+  source = "git@github.com:thePaulRichard/terraform-aws-s3-cloudfront.git"
 
   pgp_key = filebase64("./key")
 
