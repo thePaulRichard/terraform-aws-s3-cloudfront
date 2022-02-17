@@ -100,11 +100,11 @@ resource "aws_s3_bucket_versioning" "this" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
-  bucket = aws_s3_bucket.private.bucket
+  bucket = aws_s3_bucket.private.id
 
   rule {
     apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
+      sse_algorithm = "AES256"
     }
   }
 }
@@ -187,7 +187,7 @@ resource "aws_cloudfront_distribution" "s3" {
   aliases             = var.aliases
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = var.description
+  comment             = var.comment
   price_class         = var.price_class
   default_root_object = var.default_root_object
 

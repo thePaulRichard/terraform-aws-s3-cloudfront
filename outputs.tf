@@ -1,21 +1,16 @@
 output "s3_bucket_id" {
+  description = "The S3 Bucket ID."
   value       = aws_s3_bucket.private.id
-  description = "S3 Bucket ID"
-}
-
-output "s3_bucket" {
-  value       = aws_s3_bucket.private.bucket
-  description = "S3 Bucket"
 }
 
 output "iam_access_key" {
-  description = "The IAM access key secret"
-  value       = aws_iam_access_key.ci_cd[0].id
+  description = "The IAM access key id."
+  value       = element(concat(aws_iam_access_key.ci_cd.*.id, [""]), 0)
 }
 
 output "iam_secret" {
-  description = "The IAM access key secret"
-  value       = aws_iam_access_key.ci_cd[0].encrypted_secret
+  description = "The IAM access key secret."
+  value       = element(concat(aws_iam_access_key.ci_cd.*.encrypted_secret, [""]), 0)
 }
 
 output "cloudfront_id" {

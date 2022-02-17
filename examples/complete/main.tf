@@ -10,12 +10,6 @@ provider "aws" {
       Project     = "My Project"
     }
   }
-
-  # Make it faster by skipping something
-  skip_get_ec2_platforms      = true
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
 }
 
 provider "aws" {
@@ -25,8 +19,8 @@ provider "aws" {
 }
 
 locals {
-  domain_name = "rdeai-lab.net"
   zone_id     = data.aws_route53_zone.mgmt.zone_id
+  domain_name = "example.com"
   subdomain   = "mycdn"
 }
 
@@ -72,11 +66,13 @@ resource "aws_route53_record" "validation" {
 module "s3_cloudfront" {
   source = "../../"
 
+  # To create the gpg key:
+  # sh ../../gpg.sh
   # To decrypt the iam_secret:
-  # terraform output iam_secret | base64 --decode | gpg -d
+  # terraform output iam_secret | base64 --decode --ignore-garbage | gpg --decrypt 
   pgp_key = filebase64("./key")
 
-  description = "My S3-CloudFront"
+  comment = "My S3-CloudFront"
   aliases     = ["${local.subdomain}.${local.domain_name}"]
 
   viewer_certificate = {
@@ -86,7 +82,7 @@ module "s3_cloudfront" {
 }
 
 resource "aws_s3_bucket_cors_configuration" "example" {
-  bucket = module.s3_cloudfront.s3_bucket
+  bucket = module.s3_cloudfront.s3_bucket_id
 
   cors_rule {
     allowed_headers = ["*"]

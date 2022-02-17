@@ -1,5 +1,5 @@
-variable "description" {
-  description = "Any description you want to include about the resources."
+variable "comment" {
+  description = "Any description you want to include about the CloudFront resource."
   type        = string
   default     = null
 }
@@ -8,12 +8,6 @@ variable "aliases" {
   description = "Extra CNAMEs (alternate domain names), if any, for this distribution."
   type        = list(string)
   default     = null
-}
-
-variable "cors_rule" {
-  description = "List of maps containing rules for Cross-Origin Resource Sharing."
-  type        = any
-  default     = []
 }
 
 variable "default_root_object" {
@@ -56,7 +50,7 @@ variable "create_iam" {
 }
 
 variable "pgp_key" {
-  description = "PGP public key."
+  description = "The PGP public key that use to encrypted the IAM access key."
   type        = string
   default     = "keybase:test"
 }
