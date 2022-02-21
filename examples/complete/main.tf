@@ -69,7 +69,8 @@ module "s3_cloudfront" {
   # To create the gpg key:
   # sh ../../gpg.sh
   # To decrypt the iam_secret:
-  # terraform output iam_secret | base64 --decode --ignore-garbage | gpg --decrypt 
+  # terraform output iam_secret | base64 --decode --ignore-garbage | gpg --decrypt
+  create_iam = true
   pgp_key = filebase64("./key")
 
   comment = "My S3-CloudFront"

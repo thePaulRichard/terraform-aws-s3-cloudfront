@@ -41,8 +41,6 @@ provider "aws" {
 
 module "s3_cloudfront" {
   source = "git@github.com:thePaulRichard/terraform-aws-s3-cloudfront.git"
-
-  create_iam  = false
 }
 ```
 
@@ -124,10 +122,10 @@ resource "aws_s3_bucket_cors_configuration" "example" {
 | geo_restriction | The restriction configuration for this distribution (geo_restrictions). | `any` | `null` | no |
 | logging_config | The logging configuration that controls how logs are written to your distribution (maximum one). | `any` | `null` | no |
 | viewer_certificate | The SSL configuration for this distribution. | `any` | `null` | no |
-| create_iam | Whether to create the IAM user and Access Key. | `bool` | `true` | no |
+| create_iam | Whether to create the IAM user and Access Key. | `bool` | `false` | no |
 | pgp_key | The PGP public key that is used to encrypt the IAM access key. | `string` | `keybase:test` | no |
 | s3_destroy | Force all objects to be deleted from the bucket so that the bucket can be destroyed without error. | `bool` | `false` | no |
-| s3_versioning | Whether to enable the S3 bucket versioning. | `string` | `Suspended` | no |
+| s3_versioning | Wether to use versioning in the bucket. | `string` | `Suspended` | yes |
 
 ## Outputs
 

@@ -46,7 +46,7 @@ variable "viewer_certificate" {
 variable "create_iam" {
   description = "Whether to create the IAM user and Access Key."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "pgp_key" {
@@ -62,7 +62,7 @@ variable "s3_destroy" {
 }
 
 variable "s3_versioning" {
-  description = "Whether to enable the S3 bucket versioning."
+  description = "Wether to use versioning in the bucket."
   type        = string
   default     = "Suspended"
 }
