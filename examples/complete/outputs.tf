@@ -13,10 +13,10 @@ output "cloudfront_domain_name" {
   value       = module.s3_cloudfront.cloudfront_domain_name
 }
 
-/* output "distinct_domain_names" {
+output "distinct_domain_names" {
   description = "List of distinct domains names used for the validation."
   value       = module.acm.distinct_domain_names
-} */
+}
 
 output "iam_access_key" {
   description = "The IAM access key secret"
