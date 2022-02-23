@@ -4,6 +4,12 @@ Terraform module, which creates an S3 private bucket with encryption (SSE-S3) be
 
 *The use of **default_tags** inside providers it's **not** optional. But only **Name** is required to name the bucket.
 
+## GitLab CI example
+
+https://gitlab.com/paulrichard/aws-s3-bucket-sync.git
+
+This repo syncs all data in the **s3bucket** folder to the s3 bucket and make a cache invalidation on the **CloudFront**.
+
 ## GPG
 
 Execute the script [gpg.sh](gpg.sh) to create your gpg key for use with the IAM user (will make the key file in the folder).
